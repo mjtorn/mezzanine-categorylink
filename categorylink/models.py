@@ -3,11 +3,13 @@
 from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext_lazy as _
+from django.utils.http import urlunquote
 
 from django.db import models
 
 from mezzanine.blog import models as blog_models
 from mezzanine.pages import models as pages_models
+
 
 class CategoryLink(pages_models.Page):
     """Link to blog category
@@ -33,8 +35,8 @@ class CategoryLink(pages_models.Page):
         return rev_url
 
     def save(self, *args, **kwargs):
-        self.slug = self.get_absolute_url()
+        slug = urlunquote(self.get_absolute_url())
+        self.slug = '/%s/' % slug.strip('/')
         return super(CategoryLink, self).save(*args, **kwargs)
 
 # EOF
-
