@@ -26,11 +26,10 @@ class CategoryLink(pages_models.Page):
         cat_slug = self.blog_category.slug
 
         rev_url = reverse('blog_post_list_category', args=(cat_slug,))
-        return rev_url
+        return rev_url.strip('/')
 
     def save(self, *args, **kwargs):
-        slug = urlunquote(self.get_absolute_url())
-        self.slug = '/%s/' % slug.strip('/')
+        self.slug = urlunquote(self.get_absolute_url())
         return super(CategoryLink, self).save(*args, **kwargs)
 
 # EOF
