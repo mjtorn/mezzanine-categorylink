@@ -25,13 +25,7 @@ class CategoryLink(pages_models.Page):
         # not the hybrid animal
         cat_slug = self.blog_category.slug
 
-        # know we are like /.../ which breaks later get_absolute_url calls
         rev_url = reverse('blog_post_list_category', args=(cat_slug,))
-        if rev_url[0] == '/':
-            rev_url = rev_url[1:]
-        if rev_url[-1] == '/':
-            rev_url = rev_url[:-1]
-
         return rev_url
 
     def save(self, *args, **kwargs):
